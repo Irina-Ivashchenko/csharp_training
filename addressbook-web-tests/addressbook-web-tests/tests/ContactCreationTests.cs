@@ -22,6 +22,16 @@ namespace WebAddressbookTests
             app.Navigator.ReturnToHomePage();
             app.Auth.Logout();
         }
-    
+
+        [Test]
+        public void EmptyContactCreationTest()
+        {
+            ContactData contact = new ContactData("", "");
+            app.Contacts.Create(contact);
+
+            app.Navigator.ReturnToHomePage();
+            app.Auth.Logout();
+        }
+
     }
 }
