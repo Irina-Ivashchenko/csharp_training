@@ -20,6 +20,8 @@ namespace WebAddressbookTests
 
         public ContactHelper Create(ContactData contact)
         {
+           manager.Navigator.OpenHomePage();
+
            InitContactCreation();
            FillContactForm(contact);
            SubmitContactCreation();
@@ -85,14 +87,10 @@ namespace WebAddressbookTests
 
         public ContactHelper FillContactForm(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstname);
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
-            /* driver.FindElement(By.Name("nickname")).Clear();
-             driver.FindElement(By.Name("nickname")).SendKeys(contact.Nickname);
-             driver.FindElement(By.Name("notes")).Clear();
-             driver.FindElement(By.Name("notes")).SendKeys(contact.Notes);*/
+            Type(By.Name("firstname"), contact.Firstname);
+            Type(By.Name("lastname"), contact.Lastname);
+            /* Type(By.Name("nickname"), contact.Nickname);
+             Type(By.Name("notes"), contact.Notes); */
             return this;
         }
 
