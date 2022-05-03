@@ -100,8 +100,11 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public bool IsContactCreate()
+        {
+            return IsElementPresent(By.Name("entry"));
+        }
 
-       
 
     }
 }

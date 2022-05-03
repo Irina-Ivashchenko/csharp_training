@@ -31,7 +31,7 @@ namespace WebAddressbookTests
         {
             // prepare
             app.Auth.Logout();
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
 
             // action
             AccountData account = new AccountData("admin", "123456");

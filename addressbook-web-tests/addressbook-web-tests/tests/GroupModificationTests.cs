@@ -12,8 +12,18 @@ namespace WebAddressbookTests
     {
         [Test]
         public void GroupModificationTest()
-        {
-            GroupData newData = new GroupData("zzz");
+       {
+            app.Navigator.GoToGroupsPage();
+            if (!app.Groups.IsGroupCreate())
+            {
+                GroupData group = new GroupData("newDataForModification");
+                group.Header = "NotModificationHeader";
+                group.Footer = "NotModificationFooter";
+
+                app.Groups.Create(group);
+            }
+
+            GroupData newData = new GroupData("ModificationData");
             newData.Header = null;
             newData.Footer = null;
 

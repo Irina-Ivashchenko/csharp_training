@@ -18,8 +18,6 @@ namespace WebAddressbookTests
             contact.Nickname = "Vano";
             contact.Notes = "colleague"; */
             app.Contacts.Create(contact);
-
-            //app.Auth.Logout();
         }
 
         [Test]
@@ -27,8 +25,6 @@ namespace WebAddressbookTests
         {
             ContactData contact = new ContactData("", "");
             app.Contacts.Create(contact);
-
-            //app.Auth.Logout();
         }
 
     }
