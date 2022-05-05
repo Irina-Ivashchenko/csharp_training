@@ -17,7 +17,6 @@ namespace WebAddressbookTests
         {
         }
   
-
         public ContactHelper Create(ContactData contact)
         {
            manager.Navigator.OpenHomePage();
@@ -60,7 +59,7 @@ namespace WebAddressbookTests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("//tr[@name=\"entry\"][" + index + "]//input[@type=\"checkbox\"]")).Click();
+            driver.FindElement(By.XPath("//tr[@name=\"entry\"][" + (index+1) + "]//input[@type=\"checkbox\"]")).Click();
             return this;
         }
 
@@ -72,12 +71,9 @@ namespace WebAddressbookTests
 
         public ContactHelper InitContactModification(int index)
         {
-            driver.FindElement(By.XPath("//tr[@name=\"entry\"][" + index + "]//img[@title=\"Edit\"]")).Click();
+            driver.FindElement(By.XPath("//tr[@name=\"entry\"][" + (index+1) + "]//img[@title=\"Edit\"]")).Click();
             return this;
         }
-
-
-
 
         public ContactHelper InitContactCreation()
         {
@@ -105,6 +101,21 @@ namespace WebAddressbookTests
             return IsElementPresent(By.Name("entry"));
         }
 
+        public List<ContactData> GetContactList()
+        {
+               List<ContactData> contacts = new List<ContactData>();
+               manager.Navigator.OpenHomePage();
+               ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
+               int i = 1;
 
+            foreach (IWebElement element in elements)
+            {
+                IWebElement firstname = driver.FindElement(By.XPath("//tbody/tr[" + (i + 1) + "]/td[3]"));
+                IWebElement lastname = driver.FindElement(By.XPath("//tbody/tr[" + (i + 1) + "]/td[2]"));
+                contacts.Add(new ContactData(firstname.Text, lastname.Text));
+                i++;
+            }
+    return contacts;
+        }
     }
 }
