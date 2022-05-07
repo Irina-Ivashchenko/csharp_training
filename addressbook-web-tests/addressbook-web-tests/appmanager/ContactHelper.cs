@@ -54,6 +54,7 @@ namespace WebAddressbookTests
         public ContactHelper RemoveContact()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -66,6 +67,7 @@ namespace WebAddressbookTests
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -85,14 +87,13 @@ namespace WebAddressbookTests
         {
             Type(By.Name("firstname"), contact.Firstname);
             Type(By.Name("lastname"), contact.Lastname);
-            /* Type(By.Name("nickname"), contact.Nickname);
-             Type(By.Name("notes"), contact.Notes); */
             return this;
         }
 
         public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -101,21 +102,34 @@ namespace WebAddressbookTests
             return IsElementPresent(By.Name("entry"));
         }
 
+        private List<ContactData> contactCache = null;
+
         public List<ContactData> GetContactList()
         {
-               List<ContactData> contacts = new List<ContactData>();
-               manager.Navigator.OpenHomePage();
-               ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
-               int i = 1;
-
-            foreach (IWebElement element in elements)
+            if (contactCache == null)
             {
-                IWebElement firstname = driver.FindElement(By.XPath("//tbody/tr[" + (i + 1) + "]/td[3]"));
-                IWebElement lastname = driver.FindElement(By.XPath("//tbody/tr[" + (i + 1) + "]/td[2]"));
-                contacts.Add(new ContactData(firstname.Text, lastname.Text));
-                i++;
+                contactCache = new List<ContactData>();
+                manager.Navigator.OpenHomePage();
+                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name='entry']"));
+                int i = 1;
+                foreach (IWebElement element in elements)
+                {
+                    IWebElement firstname = driver.FindElement(By.XPath("//tbody/tr[" + (i + 1) + "]/td[3]"));
+                    IWebElement lastname = driver.FindElement(By.XPath("//tbody/tr[" + (i + 1) + "]/td[2]"));
+                    contactCache.Add(new ContactData(firstname.Text, lastname.Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")
+                    });
+                    i++;
+                }
             }
-    return contacts;
+                           
+             return new List<ContactData> (contactCache);
+        }
+
+        public int GetContactCount()
+        {
+            return driver.FindElements(By.XPath("//tr[@name='entry']")).Count;
         }
     }
 }

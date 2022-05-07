@@ -15,13 +15,12 @@ namespace WebAddressbookTests
         public void ContactCreationTest()
         {
             ContactData contact = new ContactData("Ivan", "Ivanov");
-            /* Here you can enter values ​​for optional parameters ContactData
-            contact.Nickname = "Vano";
-            contact.Notes = "colleague"; */
 
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.Create(contact);
+
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts.Add(contact);
@@ -38,6 +37,7 @@ namespace WebAddressbookTests
             List<ContactData> oldContacts = app.Contacts.GetContactList();
 
             app.Contacts.Create(contact);
+            Assert.AreEqual(oldContacts.Count + 1, app.Contacts.GetContactCount());
 
             List<ContactData> newContacts = app.Contacts.GetContactList();
             oldContacts.Add(contact);
