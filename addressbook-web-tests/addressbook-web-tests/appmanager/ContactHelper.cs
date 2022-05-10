@@ -78,6 +78,12 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper InitContactDetails(int index)
+        {
+            driver.FindElement(By.XPath("//tr[@name=\"entry\"][" + (index + 1) + "]//img[@title=\"Details\"]")).Click();
+            return this;
+        }
+
         public ContactHelper InitContactCreation()
         {
             driver.FindElement(By.LinkText("add new")).Click();
@@ -180,6 +186,26 @@ namespace WebAddressbookTests
                 Email = email,
                 Email2 = email2,
                 Email3 = email3
+            };
+        }
+
+        private string CleanAllInformation(string allInformation)
+        {
+            if (allInformation == null || allInformation == "")
+            {
+                return "";
+            }
+            return Regex.Replace(allInformation, "[\r\n]", "");
+        }
+
+        public ContactData GetContactInformationFromDetails(int index)
+        {
+            manager.Navigator.OpenHomePage();
+            InitContactDetails(0);
+            string allInformation = (CleanAllInformation(driver.FindElement(By.CssSelector("div#content")).Text)).Trim();
+            return new ContactData(null, null)
+            {
+                AllInformation = allInformation
             };
         }
 
