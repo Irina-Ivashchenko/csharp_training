@@ -94,6 +94,7 @@ namespace WebAddressbookTests
         {
             Type(By.Name("firstname"), contact.Firstname);
             Type(By.Name("lastname"), contact.Lastname);
+            Type(By.Name("address"), contact.Address);
             return this;
         }
 
