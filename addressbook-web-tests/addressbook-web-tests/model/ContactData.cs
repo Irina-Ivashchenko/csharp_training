@@ -78,6 +78,15 @@ namespace WebAddressbookTests
             return email + "\r\n";
         }
 
+        private string CleanEmail(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+            return "\r\n" + email;
+        }
+
         public string AllEmails
         {
             get
@@ -103,7 +112,7 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return "H: " + homePhone;
+            return "\r\nH: " + homePhone;
         }
 
         private string FullMobilePhone(string mobilePhone)
@@ -112,7 +121,7 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return "M: " + mobilePhone;
+            return "\r\nM: " + mobilePhone;
         }
 
         private string FullWorkPhone(string workPhone)
@@ -121,7 +130,16 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return "W: " + workPhone;
+            return "\r\nW: " + workPhone;
+        }
+
+        private string CleanUpAddress(string address)
+        {
+            if (address == null || address == "")
+            {
+                return "";
+            }
+            return address + "\r\n";
         }
 
         public string AllInformation
@@ -134,9 +152,9 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    fullname = Firstname + " " + Lastname;
-                    return (fullname.Trim() + Address + FullHomePhone(HomePhone) + FullMobilePhone(MobilePhone)
-                    + FullWorkPhone(WorkPhone) + Email + Email2 + Email3).Trim();
+                    fullname = (Firstname + " " + Lastname).Trim() + "\r\n";
+                    return (fullname + CleanUpAddress(Address) + FullHomePhone(HomePhone) + FullMobilePhone(MobilePhone)
+                    + FullWorkPhone(WorkPhone) + "\r\n" + CleanEmail(Email) + CleanEmail(Email2) + CleanEmail(Email3)).Trim();
                 }
             }
             set

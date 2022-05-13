@@ -190,7 +190,7 @@ namespace WebAddressbookTests
             };
         }
 
-        private string CleanAllInformation(string allInformation)
+      /*  private string CleanAllInformation(string allInformation)
         {
             if (allInformation == null || allInformation == "")
             {
@@ -198,12 +198,13 @@ namespace WebAddressbookTests
             }
             return Regex.Replace(allInformation, "[\r\n]", "");
         }
+        */
 
         public ContactData GetContactInformationFromDetails(int index)
         {
             manager.Navigator.OpenHomePage();
             InitContactDetails(0);
-            string allInformation = (CleanAllInformation(driver.FindElement(By.CssSelector("div#content")).Text)).Trim();
+            string allInformation = (driver.FindElement(By.CssSelector("div#content")).Text).Trim();
             return new ContactData(null, null)
             {
                 AllInformation = allInformation
