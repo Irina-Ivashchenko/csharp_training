@@ -13,7 +13,6 @@ namespace WebAddressbookTests
         private string allPhones;
         private string allEmails;
         private string allInformation;
-        private string fullname;
 
         public ContactData(string firstname, string lastname)
         {
@@ -69,6 +68,43 @@ namespace WebAddressbookTests
             }
         }
 
+        public string FullHomePhone(string homePhone)
+        {
+            if (homePhone == null || homePhone == "")
+            {
+                return "";
+            }
+            return "H: " + homePhone + "\r\n";
+        }
+
+        public string FullMobilePhone(string mobilePhone)
+        {
+            if (mobilePhone == null || mobilePhone == "")
+            {
+                return "";
+            }
+            return "M: " + mobilePhone + "\r\n";
+        }
+
+        public string FullWorkPhone(string workPhone)
+        {
+            if (workPhone == null || workPhone == "")
+            {
+                return "";
+            }
+            return "W: " + workPhone + "\r\n";
+        }
+
+        private string FullPhones(string homePhone, string mobilePhone, string workPhone)
+        {
+            if ((homePhone == null || homePhone == "") && (mobilePhone == null || mobilePhone == "")
+                    && (workPhone == null || workPhone == ""))
+            {
+                return "";
+            }
+            return "\r\n" + FullHomePhone(HomePhone) + FullMobilePhone(MobilePhone) + FullWorkPhone(WorkPhone);
+        }
+
         private string CleanUpEmail(string email)
         {
             if (email == null || email == "")
@@ -76,16 +112,7 @@ namespace WebAddressbookTests
                 return "";
             }
             return email + "\r\n";
-        }
-
-        private string CleanEmail(string email)
-        {
-            if (email == null || email == "")
-            {
-                return "";
-            }
-            return "\r\n" + email;
-        }
+        }      
 
         public string AllEmails
         {
@@ -106,31 +133,14 @@ namespace WebAddressbookTests
             }
         }
 
-        private string FullHomePhone(string homePhone)
+        private string FullEmails(string email, string email2, string email3)
         {
-            if (homePhone == null || homePhone == "")
+            if ((email == null || email == "") && (email2 == null || email2 == "")
+                    && (email3 == null || email3 == ""))
             {
                 return "";
             }
-            return "\r\nH: " + homePhone;
-        }
-
-        private string FullMobilePhone(string mobilePhone)
-        {
-            if (mobilePhone == null || mobilePhone == "")
-            {
-                return "";
-            }
-            return "\r\nM: " + mobilePhone;
-        }
-
-        private string FullWorkPhone(string workPhone)
-        {
-            if (workPhone == null || workPhone == "")
-            {
-                return "";
-            }
-            return "\r\nW: " + workPhone;
+            return "\r\n" + CleanUpEmail(Email) + CleanUpEmail(Email2) + CleanUpEmail(Email3);
         }
 
         private string CleanUpAddress(string address)
@@ -140,6 +150,15 @@ namespace WebAddressbookTests
                 return "";
             }
             return address + "\r\n";
+        }
+
+        private string CleanUpFullName(string firstname, string lastname)
+        {
+            if ((firstname == null || firstname == "") && (lastname == null || lastname == ""))
+            {
+                return "";
+            }
+            return (Firstname + " " + Lastname).Trim() + "\r\n";
         }
 
         public string AllInformation
@@ -152,9 +171,9 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    fullname = (Firstname + " " + Lastname).Trim() + "\r\n";
-                    return (fullname + CleanUpAddress(Address) + FullHomePhone(HomePhone) + FullMobilePhone(MobilePhone)
-                    + FullWorkPhone(WorkPhone) + "\r\n" + CleanEmail(Email) + CleanEmail(Email2) + CleanEmail(Email3)).Trim();
+                    return (CleanUpFullName(Firstname, Lastname) + CleanUpAddress(Address) 
+                        + FullPhones(HomePhone, MobilePhone, WorkPhone)
+                        + FullEmails(Email, Email2, Email3)).Trim();
                 }
             }
             set

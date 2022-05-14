@@ -190,16 +190,6 @@ namespace WebAddressbookTests
             };
         }
 
-      /*  private string CleanAllInformation(string allInformation)
-        {
-            if (allInformation == null || allInformation == "")
-            {
-                return "";
-            }
-            return Regex.Replace(allInformation, "[\r\n]", "");
-        }
-        */
-
         public ContactData GetContactInformationFromDetails(int index)
         {
             manager.Navigator.OpenHomePage();
