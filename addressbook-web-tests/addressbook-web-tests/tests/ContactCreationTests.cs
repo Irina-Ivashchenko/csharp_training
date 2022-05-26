@@ -72,7 +72,7 @@ namespace WebAddressbookTests
             Assert.AreEqual(oldContacts, newContacts);
         }
 
-        /*     [Test]
+    [Test]
              public void EmptyContactCreationTest()
              {
                  ContactData contact = new ContactData("", "");
@@ -88,6 +88,6 @@ namespace WebAddressbookTests
                  newContacts.Sort();
                  Assert.AreEqual(oldContacts, newContacts);
              }
-             */
+
     }
 }
