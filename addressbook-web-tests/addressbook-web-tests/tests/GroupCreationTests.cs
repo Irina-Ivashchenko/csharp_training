@@ -4,7 +4,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
@@ -91,39 +90,24 @@ namespace WebAddressbookTests
             Assert.AreEqual(oldGroups, newGroups);
         }
 
-        /*        [Test]
-                public void BadNameGroupCreationTest()
-                {
-                    GroupData group = new GroupData("a'a");
-                    group.Header = "";
-                    group.Footer = "";
-
-                    List<GroupData> oldGroups = app.Groups.GetGroupList();
-
-                    app.Groups.Create(group);
-                    Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
-
-                    List<GroupData> newGroups = app.Groups.GetGroupList();
-                    oldGroups.Add(group);
-                    oldGroups.Sort();
-                    newGroups.Sort();
-                    Assert.AreEqual(oldGroups, newGroups);
-                }
-        */
-
-        [Test]
-        public void TestDBConnectivity()
+/*        [Test]
+        public void BadNameGroupCreationTest()
         {
-            DateTime start = DateTime.Now;
-            List<GroupData> fromUi = app.Groups.GetGroupList();
-            DateTime end = DateTime.Now;
-            System.Console.Out.WriteLine(end.Subtract(start));
+            GroupData group = new GroupData("a'a");
+            group.Header = "";
+            group.Footer = "";
 
-            start = DateTime.Now;
-            List<GroupData> fromDb = GroupData.GetAll();
-            end = DateTime.Now;
-            System.Console.Out.WriteLine(end.Subtract(start));
+            List<GroupData> oldGroups = app.Groups.GetGroupList();
+
+            app.Groups.Create(group);
+            Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
+
+            List<GroupData> newGroups = app.Groups.GetGroupList();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
-
+*/
     }
 }
