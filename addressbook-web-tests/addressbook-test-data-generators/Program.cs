@@ -40,12 +40,13 @@ namespace addressbook_test_data_generators
             }
             if (datatype == "groups")
             {
-/*             if (format == "csv")
+   /*          if (format == "csv")
                {
                     writeGroupsToCsvFile(groups, writer);
                } 
-               else  
-*/
+               else 
+   */
+
                 if (format == "xml")
                 {
                     writeGroupsToXmlFile(groups, writer);
@@ -83,7 +84,7 @@ namespace addressbook_test_data_generators
 
         }
 
-/*        static void writeGroupsToCsvFile(List<GroupData> groups, StreamWriter writer)
+ /*      static void writeGroupsToCsvFile(List<GroupData> groups, StreamWriter writer)
         {
             foreach (GroupData group in groups)
             {
@@ -91,7 +92,7 @@ namespace addressbook_test_data_generators
                     group.Name, group.Header, group.Footer));
             }
         }
-*/
+ */
 
         static void writeGroupsToXmlFile(List<GroupData> groups, StreamWriter writer)
         {
