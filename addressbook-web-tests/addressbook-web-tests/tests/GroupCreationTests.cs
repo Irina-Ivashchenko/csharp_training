@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests: AuthTestBase
+    public class GroupCreationTests: GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -99,13 +99,13 @@ namespace WebAddressbookTests
         [Test, TestCaseSource("GroupDataFromXmlFile")]
         public void GroupCreationTestFromXmlFile(GroupData group)
         {
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Groups.Create(group);
 
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -115,13 +115,13 @@ namespace WebAddressbookTests
         [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTestFromJsonFile(GroupData group)
         {
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Groups.Create(group);
 
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -135,12 +135,12 @@ namespace WebAddressbookTests
             group.Header = "";
             group.Footer = "";
 
-            List<GroupData> oldGroups = app.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             app.Groups.Create(group);
             Assert.AreEqual(oldGroups.Count + 1, app.Groups.GetGroupCount());
 
-            List<GroupData> newGroups = app.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -153,12 +153,12 @@ namespace WebAddressbookTests
             DateTime start = DateTime.Now;
             List<GroupData> fromUi = app.Groups.GetGroupList();
             DateTime end = DateTime.Now;
-            System.Console.Out.WriteLine(end.Subtract(start));
+            System.Console.Out.WriteLine("UI: " + end.Subtract(start));
 
             start = DateTime.Now;
             List<GroupData> fromDb = GroupData.GetAll();
             end = DateTime.Now;
-            System.Console.Out.WriteLine(end.Subtract(start));
+            System.Console.Out.WriteLine("DB: " + end.Subtract(start));
         }
 
     }
