@@ -131,6 +131,18 @@ namespace WebAddressbookTests
         {
             return IsElementPresent(By.ClassName("group"));
         }
+        public GroupHelper GroupExistenceCheck()
+        {
+            manager.Navigator.GoToGroupsPage();
+            if (!IsGroupCreate())
+            {
+                GroupData group = new GroupData("newData");
+                group.Header = "newHeader";
+                group.Footer = "newFooter";
+                Create(group);
+            }
+            return this;
+        }
 
         private List<GroupData> groupCache = null;
 

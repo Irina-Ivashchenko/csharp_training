@@ -29,6 +29,25 @@ namespace WebAddressbookTests
            return this;
         }
 
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.OpenHomePage();
+            ClearGroupFilter();
+            SelectContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count() > 0);
+        }
+        public void RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.OpenHomePage();
+            SetGroupFilter(group.Name);
+            SelectContact(contact.Id);
+            CommitRemovingContactFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count() > 0);
+        }
+
         public ContactHelper Modify(int v, ContactData newData)
         {
             manager.Navigator.OpenHomePage();
@@ -134,11 +153,20 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("submit")).Click();
             contactCache = null;
             return this;
-        }
-
+        }  
         public bool IsContactCreate()
         {
             return IsElementPresent(By.Name("entry"));
+        }
+        public ContactHelper ContactExistanceCheck()
+        {
+            manager.Navigator.OpenHomePage();
+            if (!IsContactCreate())
+            {
+                ContactData contact = new ContactData("NewFirstName", "NewLastName");
+                Create(contact);
+            }
+            return this;
         }
 
         private List<ContactData> contactCache = null;
@@ -239,5 +267,35 @@ namespace WebAddressbookTests
             Match m = new Regex(@"\d+").Match(text);
             return Int32.Parse(m.Value);
         }
+        public void ContactInGroupCheck(GroupData group)
+        {
+            manager.Navigator.OpenHomePage();
+            if (group.GetContacts().Count() == 0)
+            {
+                ContactData contact = ContactData.GetAll()[0];
+                AddContactToGroup(contact, group);
+            }
+        }
+        public void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+        public void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+        public void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+        public void SetGroupFilter(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
+        }
+        public void CommitRemovingContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+        
     }
 }
