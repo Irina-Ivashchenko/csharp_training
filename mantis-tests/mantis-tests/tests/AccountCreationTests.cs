@@ -30,9 +30,9 @@ namespace mantis_tests
         {
             AccountData account = new AccountData()
             {
-                Name = "Testuser",
+                Name = "TestUser",
                 Password = "password",
-                Email = "testuser@localhost.localdomain"
+                Email = "testUser@localhost.localdomain"
             };
             
             app.Registration.Register(account);

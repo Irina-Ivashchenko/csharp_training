@@ -18,6 +18,9 @@ namespace mantis_tests
 
         public RegistrationHelper Registration { get; set; }
         public FtpHelper Ftp { get; set; }
+        public LoginHelper LogIn { get; set; }
+        public ManagementMenuHelper Menu { get; set; }
+        public ProjectManagementHelper Project { get; set; }
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
@@ -27,7 +30,9 @@ namespace mantis_tests
             baseURL = "http://localhost";
             Registration = new RegistrationHelper(this);
             Ftp = new FtpHelper(this);
-
+            LogIn = new LoginHelper(this);
+            Menu = new ManagementMenuHelper(this);
+            Project = new ProjectManagementHelper(this);
         }
 
         ~ApplicationManager()
