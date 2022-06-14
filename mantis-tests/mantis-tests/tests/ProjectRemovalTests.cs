@@ -9,16 +9,22 @@ using System.IO;
 namespace mantis_tests
 {
     [TestFixture]
-    public class ProjectRemovalTests : AuthTestBase
+    public class ProjectRemovalTests : TestBase
     {
         [Test]
         public void ProjectRemovalTest()
-        { 
+        {
+            AccountData account = new AccountData()
+            {
+                Name = "administrator",
+                Password = "root"
+            };
+            app.LogIn.Login(account);
             app.Menu.MenuProjects();
-            app.Project.ProjectExistanceCheck();
-            List<ProjectData> oldList = app.Project.GetProjectList();
-            app.Project.DeleteProject(0);
-            List<ProjectData> newList = app.Project.GetProjectList();
+            app.Project.ProjectExistanceCheck(account);
+            List<ProjectData> oldList = app.API.GetProjectList(account);
+            app.Project.DeleteProject(account, 0);
+            List<ProjectData> newList = app.API.GetProjectList(account);
             oldList.RemoveAt(0);
             Assert.AreEqual(oldList.Count, newList.Count);
             Assert.AreEqual(oldList, newList);

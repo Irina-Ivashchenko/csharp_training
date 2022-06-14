@@ -22,7 +22,7 @@ namespace mantis_tests
                 .Until(d => d.FindElements(By.XPath("(//table/tbody)[1]/tr")).Count > 0);
         }
 
-        public void DeleteProject(int id)
+        public void DeleteProject(AccountData account, int id)
         {
             OpenProject(id);
             SubmitRemoveProject();
@@ -61,16 +61,16 @@ namespace mantis_tests
             }
             return projectList;
         }
-        public void ProjectExistanceCheck()
+        public void ProjectExistanceCheck(AccountData account)
         {
-            if (driver.FindElement(By.TagName("tbody")).FindElements(By.TagName("a")).Count() == 0)
+            if (manager.API.GetProjectList(account).Count() == 0)
             {
                 ProjectData project = new ProjectData()
                 {
                     Name = "TestProjectName",
                     Description = "TestDescription"
                 };
-                CreateProject(project);
+                manager.API.CreateProjectForRemove(account, project);
                 manager.Driver.Url = "http://localhost/mantisbt-2.25.4/manage_proj_page.php";
             };
         }

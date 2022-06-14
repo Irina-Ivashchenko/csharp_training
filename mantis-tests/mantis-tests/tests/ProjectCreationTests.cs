@@ -9,20 +9,26 @@ using System.IO;
 namespace mantis_tests
 {
     [TestFixture]
-    public class ProjectCreationTests : AuthTestBase
+    public class ProjectCreationTests : TestBase
     {
         [Test]
         public void ProjectCreationTest()
-        { 
+        {
+            AccountData account = new AccountData()
+            {
+                Name = "administrator",
+                Password = "root"
+            }; 
             ProjectData project = new ProjectData()
             {
                 Name = GenerateRandomString(10),
                 Description = GenerateRandomString(100)
             };
+            app.LogIn.Login(account);
             app.Menu.MenuProjects();
-            List<ProjectData> oldList = app.Project.GetProjectList();
+            List<ProjectData> oldList = app.API.GetProjectList(account);
             app.Project.CreateProject(project);
-            List<ProjectData> newList = app.Project.GetProjectList();
+            List<ProjectData> newList = app.API.GetProjectList(account);
             oldList.Add(project);
             oldList.Sort();
             newList.Sort();
